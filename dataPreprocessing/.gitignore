@@ -1,0 +1,4 @@
+secrets.py
+*.pyc
+*_clean.csv
+*.txt
