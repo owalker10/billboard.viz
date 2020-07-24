@@ -34,7 +34,7 @@ def search(track,artist):
     if len(result['tracks']['items']) == 0:
         print('not found:',track,'-',artist)
         return {
-            'released': ' ',
+            #'released': ' ',
             'url': ' ',
             'id': 'not_found'
         }
@@ -46,7 +46,7 @@ def search(track,artist):
     return {
         #'track': item['name'],
         #'artist': item['artists'][0]['name'],
-        'released': year,
+        #'released': year,    this release date tends to be inaccurate
         'url': url,
         'id': item['id']
     }
@@ -64,7 +64,7 @@ def get_features(ids,features):
                 continue
             for f in features:
                 num = item[f]
-                num = round(-num / 60, 3) if f == 'loudness' else round(num/250, 3) if f == 'tempo' else num
+                num = round((num+60) / 60, 3) if f == 'loudness' else round(num/250, 3) if f == 'tempo' else num
                 clean[f] = num
             clean_batch.append(clean)
 

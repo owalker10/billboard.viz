@@ -54,7 +54,7 @@ def clean_dfs(dfs):
         df['song'] = df['song'].apply(lambda name: name.split('[')[0].strip()) # remove [....]
 
         df['song'] = df['song'].apply(lambda name: re.sub(r'[\?"]','',name)) # remove quotes and unknown characters
-        ret.append(df[['top_year','artist','song']])
+        ret.append(df[['top_year','artist','song','weeks']])
     return ret
 
 # initialize the json object as a dict with the keys we need
@@ -97,7 +97,10 @@ def to_dict(row,col_names):
         ret[c] = row[c]
     ret['features'] = {}
     for f in features:
-        ret['features'][f] = row[f]
+        if np.isnan(row[f]): # json doesnt like NaN so we do 0
+            ret['features'][f] = 0
+        else:
+            ret['features'][f] = row[f]
 
     return ret
 
@@ -130,12 +133,12 @@ if __name__ == '__main__':
                 data['features'][f]['${}'.format(decades[i])] = mean_features[f]
                 data['decades']['${}'.format(decades[i])]['features'][f] = mean_features[f]
   
-            data['decades']['${}'.format(decades[i])]['songs'] = dfs[i].apply(lambda row: to_dict(row,['top_year','artist','song','released','url']),axis=1).tolist()
+            data['decades']['${}'.format(decades[i])]['songs'] = dfs[i].apply(lambda row: to_dict(row,['top_year','weeks','artist','song','url']),axis=1).tolist()
             
-            
-        pp.pprint(data)
         with open('data.json','w') as file:
             json.dump(data,file)
+        pp.pprint(data)
+        
 
 
         
