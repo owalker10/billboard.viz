@@ -7,6 +7,7 @@ import descriptions from '../data/decadeDescriptions'
 import TabPanel from '../components/TabPanel'
 import OverTime from '../components/OverTime'
 import ByDecade from '../components/ByDecade'
+import useSessionState from '../context/useSessionState'
 
 
 const data = require('../data/data.json')
@@ -27,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 const VizPage = () => {
     const classes = useStyles()
-    const [tab, setTab] = useState(0)
-    const [decade, setDecade] = useState('1940')
+    const [tab, setTab] = useSessionState('tab',0)
+    const [decade, setDecade] = useSessionState('decade','1940')
     
 
     return (

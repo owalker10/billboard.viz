@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '100%',
         overflow: 'auto'
     },
+    listItem: {
+        '&:hover': {
+            backgroundColor: theme.palette.grey[200]
+        }
+    },
     itemContent: {
         display: 'flex',
         alignItems: 'center',
@@ -54,7 +59,7 @@ function SongList(props) {
     return (
         <div className={classes.root}>
             <List className={classes.list} component={Scrollbars} autoHide autoHideTimeout={700} autoHideDuration={200} renderTrackHorizontal={noHorizontalScroll}>
-                {songs.map((song,i) => (<div key={i}>
+                {songs.map((song,i) => (<div className={classes.listItem }key={i}>
                     <SongItem song={song} i={i} classes={classes} />
                     {<Divider variant='middle' light/>
                     }

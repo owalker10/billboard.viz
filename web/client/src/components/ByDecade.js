@@ -6,6 +6,7 @@ import * as $ from 'jquery'
 import FeatureCheckboxLegend from './FeatureCheckboxLegend'
 import SpiderChart from './SpiderChart'
 import theme from '../styles/theme'
+import useSessionState from '../context/useSessionState'
 
 
 
@@ -18,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     left: {
-        flex: '1',
+        flex: '1 1 0',
+        minWidth: 0,
         display: 'flex',
         flexDirection: 'column',
         '& > hr': {
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     spiderContainer: {
         flex: '1 1 500px',
-        minHeight: '500px',
+        maxHeight: '500px',
         display: 'flex',
         alignItems: 'stretch',
         justifyContent: 'stretch'
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         flex: '1 1 auto'
     },
     right: {
-        flex: '1',
+        flex: '1 1 0',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -93,9 +95,9 @@ function ByDecade({ data, descriptions, decade, setDecade }) {
         return avgs
     }, {})
 
-    const [compareDecade, setCompareDecade] = useState('none') // in key form i.e. $1940
-    const [viewSongs, setViewSongs] = useState(false)
-    const [listHeight, setListHeight] = useState(0)
+    const [compareDecade, setCompareDecade] = useSessionState('compareDecade','none') // in key form i.e. $1940
+    const [viewSongs, setViewSongs] = useSessionState('viewSongs',false)
+    const [listHeight, setListHeight] = useSessionState('listHeight',0)
 
     const compareList = Object.keys(descriptions).reduce((list, decadeKey) => {
         if (decadeKey.substring(1) !== decade)
@@ -109,7 +111,7 @@ function ByDecade({ data, descriptions, decade, setDecade }) {
     ) : null
 
 
-    const [checks, setChecks] = useState(features.reduce((obj, feature)=> (
+    const [checks, setChecks] = useSessionState('checks',features.reduce((obj, feature)=> (
         {...obj, [feature]: true}
     ),{}))
     const setCheck = e => {

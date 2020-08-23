@@ -35,7 +35,7 @@ const ResponsiveSpider = ({ data, features, decade, colors, compareDecade }) => 
         maxValue={1}
         keys={compare ? [decade, compare.label] : [decade]}
         indexBy='feature'
-        margin={{ top: 60, right: 60, bottom: 60, left: 60 }}
+        margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
         colors={({ index })=>(colors[index])}
         gridLabel={LabelComponent}
         enableDotLabel={true && !compare}

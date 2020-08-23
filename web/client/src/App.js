@@ -11,6 +11,7 @@ import theme from './styles/theme'
 import ContentPage from './layouts/ContentPage'
 import SplashPage from './pages/SplashPage'
 import VizPage from './pages/VizPage'
+import { AboutPage } from './pages/AboutPage'
 
 
 function App() {
@@ -26,9 +27,7 @@ function App() {
                   <VizPage/>
                 </Route>
                 <Route path='/about'>
-                  <ContentPage>
-                    <span>hello</span>
-                  </ContentPage>
+                  <AboutPage/>
                 </Route>
                 <Route path='/'>
                   <SplashPage/>
