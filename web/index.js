@@ -2,6 +2,16 @@ const express = require('express');
 const path = require('path');
 const bodyParser= require('body-parser')
 
+/*
+to deploy:
+
+'npm run build' in /web/client
+'cd ../..'
+'heroku login'
+'heroku git:remote -a billboard-viz'
+'git subtree push --prefix web heroku master'
+
+*/
 
 const app = express();
 
@@ -9,19 +19,7 @@ app.use(bodyParser.json())
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = `mongodb+srv://user:${process.env.DB_PASS}@cluster0.vzgrz.gcp.mongodb.net/billboard?retryWrites=true&w=majority`;
-/*const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-    console.log('error:',err)
-    client.close();
-}, db => {
-    console.log('successfully connected to database')
-    const messageDB = client.db("billboard").collection("messages");
-    app.post('/sendMessage', (req,res) => {
-        console.log(req.body)
-        messageDB.insertOne(req.body)
-        res.sendStatus(200)
-    });
-});*/
+
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err,client) => {
     if (err){
         console.log('error:',err)

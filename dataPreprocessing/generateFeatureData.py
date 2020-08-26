@@ -105,6 +105,17 @@ def to_dict(row,col_names):
     return ret
 
 
+def fix_loudness():
+    with open('data.json') as data_file:
+        data = json.load(data_file)
+        for decade in data['features']['loudness'].keys():
+            data['features']['loudness'][decade] = 1 - data['features']['loudness'][decade]
+            data['decades'][decade]['features']['loudness'] = 1 - data['decades'][decade]['features']['loudness']
+            for i in range(len(data['decades'][decade]['songs'])):
+                data['decades'][decade]['songs'][i]['features']['loudness'] = 1 - data['decades'][decade]['songs'][i]['features']['loudness']
+        with open('data2.json','w') as out_file:
+            json.dump(data,out_file)
+
 
 if __name__ == '__main__':
     run = 'to json'
